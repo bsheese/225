@@ -52,10 +52,8 @@ In the repo on GitHub: **Settings → Pages → Build and deployment → Source 
 - Correct answers are present in `quizzes.json` and therefore visible to anyone
   who inspects the page. These are ungraded self-assessment quizzes, so that's
   fine — don't use this for anything exam-grade.
-- `extract_from_notebooks.py` was the one-time migration that generated the
-  initial Markdown from the `quiz_data = [...]` practice-quiz notebooks (units
-  06–08). It isn't part of the build; the Markdown is canonical now. The 09–11
-  practice-quiz notebooks use a different markdown/code-exercise format and were
-  not migrated — author Markdown for them here if you want them on the site.
+- The canonical quiz source is the Markdown in `quizzes/*.md`; author new
+  questions there. The in-notebook practice quizzes that the Markdown was
+  originally migrated from have been retired and removed.
 - This site engine is shared with the cs377 course; the only repo-specific
-  pieces are the title in `quiz_site/template/index.html` and this extractor.
+  piece is the title in `quiz_site/template/index.html`.

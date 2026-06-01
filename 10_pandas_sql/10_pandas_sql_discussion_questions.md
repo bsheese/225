@@ -9,7 +9,7 @@
 4. `SELECT DISTINCT year FROM measurements ORDER BY year` returns 12 rows. `SELECT year FROM measurements ORDER BY year` would return 1,704 rows. Why do both queries work without raising an error, even though `year` is not in `GROUP BY`? What is `DISTINCT` actually doing that makes the column reference valid here?
 
 ## `WHERE` (10.3)
-5. The notebook shows that `AND` takes precedence over `OR` in SQL, just as multiplication takes precedence over addition in arithmetic. Predict the result of this query without running it: `WHERE year = 2007 AND lifeExp > 80 OR continent = 'Africa'`. How many rows would it return? Write the version with explicit parentheses that returns only African rows with life expectancy above 80 in 2007.
+5. The notebook shows that `AND` takes precedence over `OR` in SQL, just as multiplication takes precedence over addition in arithmetic. Predict the result of this query without running it: `WHERE year = 2007 AND lifeExp > 80 OR lifeExp < 45`. Because `AND` binds tighter than `OR`, which rows actually come back, and why is that almost certainly not what the author intended? Write the version with explicit parentheses that returns only 2007 rows whose life expectancy is either above 80 or below 45.
 6. `LIKE '%land'` matches countries ending in "land." What would `LIKE '_land'` match, and how is `_` different from `%`? Name a character-matching scenario where `_` would be more useful than `%`. Why is `LIKE` not sufficient for matching all country names that contain a two-to-four letter suffix?
 
 ## `GROUP BY` and `HAVING` (10.4)

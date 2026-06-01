@@ -7,9 +7,9 @@ Undergrad CS and data science majors with Python, pandas, groupby, and SQL exper
 
 | Dataset | Source | Used in | Why |
 |---|---|---|---|
-| UCI Bike Sharing (daily) | URL (11.1), parquet (11.2–11.9) | 11.1–11.9 | One row per day for 731 consecutive days; clear seasonal and weekly structure; multiple numeric columns (cnt, casual, registered) that tell different stories |
+| UCI Bike Sharing (daily) | repo `data/bike_daily.csv` via raw GitHub URL | 11.1–11.9 | One row per day for 731 consecutive days; clear seasonal and weekly structure; multiple numeric columns (cnt, casual, registered) that tell different stories |
 
-Notebook 11.1 loads from URL and exports `bike_daily.parquet`. Notebooks 11.2–11.9 load from the parquet. The dataset switches from the Gapminder data used in modules 09–10; the switch is acknowledged explicitly at the top of 11.1.
+Every notebook is self-contained: each loads the bike data from the source URL and rebuilds the datetime index in its first code cell so it can be opened on its own through its Colab badge. Notebook 11.1 explains the parse and indexing step by step; 11.2–11.9 repeat a compact `read_csv` load with `parse_dates` and `index_col` and do not re-teach it. The dataset switches from the Gapminder data used in modules 09–10; the switch is acknowledged explicitly at the top of 11.1.
 
 Columns used: `dteday`, `season`, `yr`, `mnth`, `holiday`, `weekday`, `workingday`, `weathersit`, `temp`, `casual`, `registered`, `cnt`.
 

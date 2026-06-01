@@ -9,7 +9,7 @@ Undergrad CS and data science majors with Python and pandas experience (modules 
 |---|---|---|---|
 | Gapminder | jennybc/gapminder GitHub (TSV) | 09.1–09.7 | Panel data with two natural grouping dimensions (continent, year) and three meaningful numerics; no cleaning needed |
 
-Notebook 09.1 loads from the URL and exports `gapminder.parquet`. Notebooks 09.2–09.7 load from the parquet file.
+Every notebook is self-contained: each loads Gapminder from the source URL in its first code cell so it can be opened on its own through its Colab badge. Notebook 09.1 explains the load; 09.2–09.7 repeat the identical load cell without re-explaining it.
 
 ## Notebooks
 

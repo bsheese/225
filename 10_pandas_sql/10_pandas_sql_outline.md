@@ -7,9 +7,9 @@ Undergrad CS and data science majors with Python, pandas, and groupby experience
 
 | Dataset | Source | Used in | Why |
 |---|---|---|---|
-| Gapminder | URL (10.1), parquet (10.2–10.7) | 10.1–10.7 | Same dataset from module 09; split into two tables to motivate JOIN |
+| Gapminder | jennybc/gapminder GitHub (TSV) | 10.1–10.7 | Same dataset from module 09; split into two tables to motivate JOIN |
 
-Notebook 10.1 loads from URL and exports `gapminder.parquet`. Notebooks 10.2–10.7 load from the parquet and rebuild the SQLite database in memory at the start of each session.
+Every notebook is self-contained: each loads Gapminder from the source URL in its first code cell so it can be opened on its own through its Colab badge. Notebooks 10.2–10.7 additionally rebuild the in-memory SQLite database from that load at the start of the notebook, since an in-memory database never persists between sessions.
 
 The split into `countries` (142 × 2) and `measurements` (1704 × 5) is artificial but models real relational database design, where redundant data is stored once and joined when needed. A `sqlite3` in-memory database is recreated in each notebook's setup cell.
 

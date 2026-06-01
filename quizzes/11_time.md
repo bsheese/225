@@ -65,7 +65,7 @@
 - [ ] `"30D"` and `"90D"` are the only valid alternatives
 
 ### How does resampling change the size of the series?
-- [x] It reduces the number of rows — e.g. 731 daily rows become 105 weekly or 24 monthly rows
+- [x] It reduces the number of rows — e.g. 731 daily rows become 106 weekly or 24 monthly rows
 - [ ] It keeps the same number of rows, filling any gaps with `NaN`
 - [ ] It always doubles the number of rows in the series
 - [ ] It leaves the row count entirely unchanged

@@ -4,7 +4,7 @@
 
 **`.diff()`** — A Series method that subtracts the previous row from the current row, producing the absolute change between consecutive periods. The first row is always `NaN` because there is no "previous row." The pandas equivalent of "how much did this change from yesterday?"
 
-**`.dt` accessor** — Syntax for extracting time components from a `DatetimeIndex`. On the index itself (not a column), use `df.index.month`, `df.index.dayofweek`, and `df.index.day_name()` to get integers or strings suitable for groupby.
+**`.dt` accessor** — Syntax for extracting time components from a datetime **column** (a Series), as in `df["dteday"].dt.month`. When the timestamps are in the **index** instead, drop the `.dt` and read the attribute directly: `df.index.month`, `df.index.dayofweek`, `df.index.day_name()`. Both return integers or strings suitable for groupby.
 
 **frequency string** — A short code passed to `resample()` that specifies the time period for grouping. Common values: `"W"` (week ending Sunday), `"ME"` (month end), `"QE"` (quarter end), `"YE"` (year end). Pandas 3.0 uses `"ME"` and `"QE"` rather than the deprecated `"M"` and `"Q"`.
 
