@@ -14,7 +14,7 @@
 
 ## Period-over-Period Comparisons (11.4)
 7. `.pct_change()` on raw daily data produces a standard deviation of about 186% because individual days can swing dramatically. `.pct_change()` on monthly totals produces much smaller values. Explain why the aggregation step (daily to monthly) reduces the variability so dramatically. What statistical property does this relate to?
-8. The notebook shows year-over-year growth was highest in January through March 2012 (115–157%) and moderated by summer 2012 (41–57%). This pattern is described as "common in young programs." What makes a young program produce this specific shape of year-over-year growth curve? If the program continued into 2013, would you expect the year-over-year percentages to continue declining, stay the same, or rise? What additional data would you need to predict this?
+8. The notebook shows year-over-year growth was highest in January through March 2012 (114–157%) and moderated by summer 2012 (41–57%). This pattern is described as "common in young programs." What makes a young program produce this specific shape of year-over-year growth curve? If the program continued into 2013, would you expect the year-over-year percentages to continue declining, stay the same, or rise? What additional data would you need to predict this?
 
 ## Seasonal Patterns (11.5)
 9. The weekday chart shows total rentals (`cnt`) are nearly flat across the week, because registered and casual riders pull in opposite directions. If you were a city planner trying to decide where to add new docking stations, which breakdown (total vs. by user type) would be more useful, and why? What question would each chart help you answer?

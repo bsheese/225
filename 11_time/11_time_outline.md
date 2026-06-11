@@ -11,7 +11,7 @@ Undergrad CS and data science majors with Python, pandas, groupby, and SQL exper
 
 Every notebook is self-contained: each loads the bike data from the source URL and rebuilds the datetime index in its first code cell so it can be opened on its own through its Colab badge. Notebook 11.1 explains the parse and indexing step by step; 11.2–11.9 repeat a compact `read_csv` load with `parse_dates` and `index_col` and do not re-teach it. The dataset switches from the Gapminder data used in modules 09–10; the switch is acknowledged explicitly at the top of 11.1.
 
-Columns used: `dteday`, `season`, `yr`, `mnth`, `holiday`, `weekday`, `workingday`, `weathersit`, `temp`, `casual`, `registered`, `cnt`.
+Columns used: `dteday`, `season`, `weathersit`, `temp`, `casual`, `registered`, `cnt`. Notebook 11.1 includes a short data dictionary for these; the dataset's other columns (`yr`, `mnth`, `holiday`, `weekday`, `workingday`) are deliberately not loaded, since 11.5 derives month and weekday from the index instead.
 
 ## Notebooks
 
@@ -23,6 +23,8 @@ Columns used: `dteday`, `season`, `yr`, `mnth`, `holiday`, `weekday`, `workingda
 | 11.4 | Period Comparisons | `.diff()`, `.pct_change()`, `.pct_change(12)` for year-over-year, `.idxmin()`, `.idxmax()` |
 | 11.5 | Seasonal Patterns | `index.month`, `index.dayofweek`, `index.day_name()`, groupby time components, `pivot_table` + `sns.heatmap` |
 | 11.9 | Exercises | All module 11 tools |
+
+A "which tool answers which question" reference table grows across notebooks 11.2 through 11.5, one row per tool, modeled on module 10's SQL translation table. The completed four-row table at the end of 11.5 doubles as the module summary.
 
 ## What Is Intentionally Excluded
 - Upsampling (only downsampling is covered; upsampling introduces interpolation complexity)

@@ -1,6 +1,6 @@
 # 11 — Time Series: Glossary
 
-**DatetimeIndex** — A pandas index where each label is a timestamp. Created by `set_index()` on a datetime column. Enables partial string indexing, resampling, and rolling operations that require rows to be understood as points in time.
+**DatetimeIndex** — A pandas index where each label is a timestamp. Created by `set_index()` on a datetime column, or in one step at load time with `pd.read_csv(..., parse_dates=[...], index_col=...)`. Enables partial string indexing, resampling, and rolling operations that require rows to be understood as points in time.
 
 **`.diff()`** — A Series method that subtracts the previous row from the current row, producing the absolute change between consecutive periods. The first row is always `NaN` because there is no "previous row." The pandas equivalent of "how much did this change from yesterday?"
 
