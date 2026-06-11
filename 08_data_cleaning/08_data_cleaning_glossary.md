@@ -44,4 +44,4 @@
 
 **timedelta64** — The pandas dtype produced by subtracting two `datetime64` columns. Represents a duration rather than a point in time. Convert to numeric with `.dt.total_seconds()`.
 
-**type coercion** — Converting a column from one dtype to another (e.g., `object` to `float64` via `pd.to_numeric()`). Coercion can be lossy if the source column contains unparseable values.
+**type coercion** — Converting a column from one dtype to another (e.g., `str` to `float64` via `pd.to_numeric()`). Coercion can be lossy if the source column contains unparseable values.

@@ -20,7 +20,7 @@ Undergrad CS and data science majors with Python and pandas experience (modules 
 |---|---|---|
 | 08.1 | What Makes Data Messy? | Taxonomy of five problem categories; `.info()`, `.isnull().sum()` |
 | 08.2 | Missing Data | `dropna(thresh=, how=, subset=)`, `ffill()`, `bfill()`, `interpolate()` |
-| 08.3 | Type Problems | `pd.to_numeric(errors=)`, `.map()`, `.astype("category")`, `pd.to_datetime()` preview |
+| 08.3 | Type Problems | `pd.to_numeric(errors=)`, `.map()`, `.astype("category")`, `pd.cut()`, `pd.to_datetime()` preview |
 | 08.4 | String Cleaning | `.str.lower/upper/title()`, `.str.strip()`, `.str.replace()`, `.str.contains()`, `.str.startswith()` |
 | 08.5 | Splitting and Extracting | `str.split(expand=True, n=)`, `str.get()`, `str.extract()`, named capture groups |
 | 08.6 | Regular Expressions | metacharacters, `[^...]`, `\d{n}`, anchors `^` and `$`; applied to phone, currency, and name problems |

@@ -17,7 +17,7 @@ Every notebook is self-contained: each loads Gapminder from the source URL in it
 |---|---|---|
 | 09.1 | Meet Gapminder | `pd.read_csv(url, sep="\t")`, `.info()`, `.describe()`, single-key groupby review |
 | 09.2 | Multiple Groupby Keys | `groupby([col1, col2])`, MultiIndex, `reset_index()`, `unstack()` |
-| 09.3 | `agg()` in Depth | `agg(["mean", "std", ...])`, named aggregation syntax, `size()` vs `count()`, `nunique()` |
+| 09.3 | `agg()` in Depth | `agg(["mean", "std", ...])`, named aggregation syntax, `size()` vs `count()`, `df.loc[groupby().idxmax()]` for the row holding each group's max, `nunique()` |
 | 09.4 | `transform()` | `groupby().transform("mean")`, deviation and z-score columns |
 | 09.5 | `filter()` | `groupby().filter(lambda g: ...)`, contrast with row-level boolean indexing |
 | 09.6 | `pivot_table()` | `pd.pivot_table(values=, index=, columns=, aggfunc=)`, `margins=True`, heatmap |

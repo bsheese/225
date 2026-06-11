@@ -78,7 +78,7 @@
 
 ## 08_3 · Type Problems
 
-### A numeric column read as `object` because one row says `"unknown"` sorts incorrectly. What fixes it?
+### A numeric column read as `str` because one row says `"unknown"` sorts incorrectly. What fixes it?
 - [x] `pd.to_numeric(col, errors="coerce")`, which parses valid numbers and turns the rest into `NaN`
 - [ ] `col.astype(int)`, which always succeeds without error
 - [ ] `col.sort_values()`, which fixes the dtype as a side effect

@@ -1,6 +1,6 @@
 # 10 — pandas and SQL: Glossary
 
-**aggregate function** — A SQL function that collapses multiple rows into a single value per group. The five standard functions are `COUNT(*)`, `COUNT(col)`, `AVG(col)`, `SUM(col)`, `MIN(col)`, and `MAX(col)`. Aggregate functions appear in `SELECT` and `HAVING`; they cannot appear in `WHERE`.
+**aggregate function** — A SQL function that collapses multiple rows into a single value per group. The standard functions are `COUNT`, `AVG(col)`, `SUM(col)`, `MIN(col)`, and `MAX(col)`; `COUNT` comes in three forms (`COUNT(*)` for all rows, `COUNT(col)` for non-null values, `COUNT(DISTINCT col)` for unique values). Aggregate functions appear in `SELECT` and `HAVING`; they cannot appear in `WHERE`.
 
 **alias (`AS`)** — A temporary name given to a column or table. Column aliases (`SELECT lifeExp AS life_expectancy`) rename the output column. Table aliases (`FROM measurements AS m`) shorten long names for use in `ON` clauses. Table aliases are required when the same column name exists in both joined tables.
 

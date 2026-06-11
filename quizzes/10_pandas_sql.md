@@ -134,7 +134,7 @@
 - [ ] `COUNT(*)` counts columns; `COUNT(DISTINCT)` counts rows
 - [ ] `COUNT(DISTINCT)` counts only null values
 
-### Why can't you put `AVG(gdpPercap) > 10000` in a `WHERE` clause?
+### Why can't you put `AVG(gdpPercap) > 20000` in a `WHERE` clause?
 - [x] `WHERE` is evaluated before grouping, so no aggregate exists yet — filtering on an aggregate must use `HAVING`
 - [ ] `WHERE` cannot use the `>` comparison operator
 - [ ] `AVG` is not a valid aggregate function in SQLite
