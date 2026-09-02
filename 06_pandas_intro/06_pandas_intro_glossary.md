@@ -38,4 +38,4 @@
 
 **vectorized operation** — An operation applied element-by-element to an entire Series or column without an explicit loop.
 
-**view** — A reference into an existing DataFrame. Modifying a view may modify the original, which is why pandas raises `SettingWithCopyWarning`.
+**view** — A reference into an existing DataFrame, as opposed to an independent copy. Modifying a view can modify the original. Whether pandas warns you about this with `SettingWithCopyWarning` depends on your pandas version: older versions (including Colab's preinstalled version, as of this writing) may raise it, while pandas 3.0's Copy-on-Write default often means no warning appears at all.

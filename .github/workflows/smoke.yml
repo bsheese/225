@@ -1,9 +1,15 @@
 name: Smoke test notebooks
 
 # Executes every notebook headlessly (the whole suite takes ~3 minutes) plus a
-# static check that committed notebooks are clean top-to-bottom runs. The
-# monthly schedule catches upstream breakage (data URLs going 404, seaborn-data
-# moving) even when the repo is idle.
+# static check that committed notebooks carry no saved outputs or execution
+# counts (see CLAUDE.md). The monthly schedule catches upstream breakage (data
+# URLs going 404, seaborn-data moving) even when the repo is idle.
+#
+# This only proves a notebook runs error-free against requirements.txt's
+# exact pinned versions. It does not run against Colab's own pandas, which
+# can lag a major version behind (students open every notebook there via the
+# "Open in Colab" badge), and it does not check that computed values still
+# match what the surrounding prose claims about them. Both are manual review.
 
 on:
   push:

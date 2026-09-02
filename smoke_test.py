@@ -9,9 +9,24 @@ the source tree. Every notebook is self-contained and loads its data from a
 URL, so the copy is safe.
 
 Before executing anything, a static check verifies that every notebook's
-saved state is a clean top-to-bottom run: code cells numbered 1..N with no
-unexecuted cells and no saved error outputs. This catches the "committed a
-notebook without re-running it" mistake without executing a thing.
+saved state is fully cleared: every code cell has execution_count = null and
+no saved outputs. Committed notebooks ship with no output on purpose (see
+CLAUDE.md) so students run each cell themselves in Colab rather than reading
+canned results, and so a saved output can never drift out of sync with the
+cell that produced it. Use `--clear` to put a notebook back into this state
+after authoring/debugging it interactively.
+
+Clearing outputs means this script's execution pass is the only thing that
+verifies a notebook still runs top to bottom without erroring; nothing here
+checks that computed values match what the surrounding prose claims about
+them, so a re-verification of prose-vs-output is still a manual step after
+substantive edits. Execution also runs against this repo's exact pinned
+pandas version (see requirements.txt), not whatever pandas Colab happens to
+ship at the time a student opens the notebook, which can lag a major version
+or more behind. A clean run here does not guarantee a clean run on Colab;
+treat that gap as real, especially for anything that depends on
+version-specific behavior (Copy-on-Write, dtype defaults, deprecation
+warnings).
 
 The full suite runs in about three minutes, so there is no reason to skip it
 before a push that touches notebooks.
@@ -20,6 +35,7 @@ Usage:
     python smoke_test.py                  # static check, then execute everything
     python smoke_test.py 07 11_2          # only paths containing a pattern
     python smoke_test.py --counts         # static check only, no execution
+    python smoke_test.py --clear          # clear outputs in place, no execution
     python smoke_test.py --list           # show what would run, don't run
     python smoke_test.py --timeout 600    # per-notebook timeout in seconds
 
@@ -93,28 +109,109 @@ def collect(patterns):
 
 
 def check_saved_state(nbs):
-    """Verify each notebook's committed state is a clean 1..N run.
+    """Verify each notebook's committed state is fully cleared.
 
-    Returns a list of problem strings (empty means all clean). Applies to
-    every notebook, exercises included: the exercises ship fully executed
-    with solution cells, so they must be clean runs too.
+    Returns a list of problem strings (empty means all clean): every code
+    cell must have execution_count = null and an empty outputs list.
+    Applies to every notebook, exercises included: a solution cell teaches
+    by its code, not by a saved result the student never had to produce.
     """
     problems = []
     for rel in nbs:
         nb = json.loads((ROOT / rel).read_text())
-        code = [c for c in nb["cells"] if c["cell_type"] == "code"]
-        counts = [c.get("execution_count") for c in code]
-        if counts != list(range(1, len(code) + 1)):
-            nulls = sum(1 for c in counts if c is None)
-            detail = f"{nulls} unexecuted cell(s)" if nulls else f"counts {counts[:6]}..."
-            problems.append(f"{rel}: not a clean 1..N run ({detail})")
-        for i, c in enumerate(code):
-            for o in c.get("outputs", []):
-                if o.get("output_type") == "error":
-                    problems.append(
-                        f"{rel}: saved error output in code cell {i} ({o.get('ename')})"
-                    )
+        for i, c in enumerate(nb["cells"]):
+            if c["cell_type"] != "code":
+                continue
+            if c.get("execution_count") is not None:
+                problems.append(
+                    f"{rel}: code cell {i} has a saved execution_count ({c['execution_count']})"
+                )
+            if c.get("outputs"):
+                problems.append(f"{rel}: code cell {i} has saved output(s)")
     return problems
+
+
+# Cell metadata that only makes sense alongside a saved output (execution
+# timestamps, Colab's output-rendering hints) and goes stale the moment the
+# output it describes is cleared.
+OUTPUT_ONLY_METADATA_KEYS = {"execution", "outputId", "colab"}
+
+
+def _detect_format(raw, nb):
+    """Reverse-engineer the (indent, sort_keys, trailing_newline) a notebook
+    was last saved with, by brute-forcing json.dumps against the raw text.
+
+    Notebooks in this repo were saved by a mix of tools/versions (classic
+    Jupyter, Colab exports, ...) and are not all serialized the same way
+    (some 1-space indent, some 2; some with sorted keys, some insertion
+    order; some with a trailing newline, some without). Guessing wrong
+    would rewrite a whole file's formatting on a one-line content edit and
+    bury the real diff in noise, so every write reuses whatever format the
+    file already had rather than imposing one convention.
+    """
+    for indent in (1, 2):
+        for sort_keys in (True, False):
+            for trailing_newline in (True, False):
+                dumped = json.dumps(nb, indent=indent, sort_keys=sort_keys, ensure_ascii=False)
+                if trailing_newline:
+                    dumped += "\n"
+                if dumped == raw:
+                    return indent, sort_keys, trailing_newline
+    return None
+
+
+def _write_notebook(path, nb, fmt):
+    indent, sort_keys, trailing_newline = fmt
+    dumped = json.dumps(nb, indent=indent, sort_keys=sort_keys, ensure_ascii=False)
+    if trailing_newline:
+        dumped += "\n"
+    path.write_text(dumped)
+
+
+def clear_outputs(nbs):
+    """Reset every code cell to execution_count = null, outputs = [] in place.
+
+    Also strips per-cell metadata that only described the now-removed output
+    (execution timestamps, Colab's outputId/base_uri/height hints). Reuses
+    each file's own existing JSON formatting (see _detect_format) so a
+    clear-only pass produces a minimal diff.
+    """
+    changed_count = 0
+    unrecognized = []
+    for rel in nbs:
+        path = ROOT / rel
+        raw = path.read_text()
+        nb = json.loads(raw)
+        fmt = _detect_format(raw, nb)
+        if fmt is None:
+            unrecognized.append(rel)
+            fmt = (1, True, True)  # nbformat's own default; best effort
+        changed = False
+        for c in nb["cells"]:
+            if c["cell_type"] != "code":
+                continue
+            if c.get("execution_count") is not None:
+                c["execution_count"] = None
+                changed = True
+            if c.get("outputs"):
+                c["outputs"] = []
+                changed = True
+            meta = c.get("metadata", {})
+            for key in OUTPUT_ONLY_METADATA_KEYS & meta.keys():
+                del meta[key]
+                changed = True
+        if changed:
+            _write_notebook(path, nb, fmt)
+            changed_count += 1
+    print(f"Cleared {changed_count}/{len(nbs)} notebook(s)"
+          f" ({len(nbs) - changed_count} already clean).")
+    if unrecognized:
+        print("Could not recognize the existing JSON formatting for "
+              f"{len(unrecognized)} notebook(s); wrote nbformat's default "
+              "format instead, so their diff may be larger than necessary:")
+        for rel in unrecognized:
+            print(f"  {rel}")
+    return 0
 
 
 def main():
@@ -127,6 +224,8 @@ def main():
                     help="list notebooks that would run, then exit")
     ap.add_argument("--counts", action="store_true",
                     help="run only the static saved-state check, no execution")
+    ap.add_argument("--clear", action="store_true",
+                    help="clear outputs/execution_count in place, no execution")
     ap.add_argument("--timeout", type=int, default=600,
                     help="per-notebook timeout in seconds (default 600)")
     args = ap.parse_args()
@@ -141,13 +240,16 @@ def main():
         print(f"\n{len(nbs)} notebooks")
         return 0
 
+    if args.clear:
+        return clear_outputs(nbs)
+
     problems = check_saved_state(nbs)
     if problems:
         print(f"Static check: {len(problems)} problem(s) in saved notebook state:")
         for p in problems:
             print(f"  {p}")
-        print("\nRe-run the notebook top to bottom and commit, e.g.:")
-        print("  jupyter nbconvert --to notebook --execute --inplace <notebook>")
+        print("\nClear outputs before committing, e.g.:")
+        print("  python smoke_test.py --clear <notebook>")
     else:
         print(f"Static check: all {len(nbs)} notebooks have clean saved state.")
     if args.counts:

@@ -11,7 +11,7 @@
 ## Selecting and Filtering
 5. What is the difference between `.loc[]` and `.iloc[]`? Construct an example where they return different results on the same DataFrame.
 6. Why must you use `&` instead of `and` when combining boolean conditions on a DataFrame? What error or unexpected behavior do you get if you use `and`?
-7. What is `SettingWithCopyWarning`, and why does pandas raise it? When should you use `.copy()`, and when is it unnecessary?
+7. What is `SettingWithCopyWarning`, and under what circumstances does pandas raise it? Why might you and a classmate running the exact same chained-indexing code see different behavior, depending on which pandas version each of you has installed? When should you use `.copy()`, and when is it unnecessary?
 
 ## Data Cleaning
 8. The notebook introduces artificial missing ages to demonstrate cleaning techniques on an otherwise complete dataset. Why might the real Titanic data have had missing ages in the first place? Does the reason data is missing affect how you should handle it?
