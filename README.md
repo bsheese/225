@@ -19,6 +19,12 @@ Each module folder contains numbered instruction notebooks (`NN_M_Topic.ipynb`),
 
 Every notebook opens with an "Open in Colab" badge, so you can run it in the browser with nothing installed. Notebooks are self-contained: each one loads its own data from a public URL, so you can open any single notebook on its own in a fresh runtime.
 
+## Blank notebook
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bsheese/225/main?urlpath=lab/tree/notebook_empty_225.ipynb)
+
+Need a scratch notebook with the standard imports (`pandas`, `seaborn`, `matplotlib.pyplot`) and nothing else? Launch [`notebook_empty_225.ipynb`](notebook_empty_225.ipynb) on Binder with the badge above.
+
 ## Practice quizzes
 
 Self-serve practice quizzes for every module are published at **https://bsheese.github.io/225/**. They are built from the Markdown in [`quizzes/`](quizzes/) and cover the instruction notebooks section by section.
