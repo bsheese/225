@@ -25,6 +25,10 @@ Every notebook opens with an "Open in Colab" badge, so you can run it in the bro
 
 Need a scratch notebook with the standard imports (`pandas`, `seaborn`, `matplotlib.pyplot`) and nothing else? Launch [`notebook_empty_225.ipynb`](notebook_empty_225.ipynb) on Binder with the badge above.
 
+## Supplemental activities
+
+In-class activities that accompany the modules live in [`supplemental/`](supplemental/).
+
 ## Practice quizzes
 
 Self-serve practice quizzes for every module are published at **https://bsheese.github.io/225/**. They are built from the Markdown in [`quizzes/`](quizzes/) and cover the instruction notebooks section by section.
