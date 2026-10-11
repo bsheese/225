@@ -5,7 +5,7 @@
 2. The `Pclass` column stores passenger class as integers 1, 2, and 3. What would happen if you computed `df["pclass"].mean()`? Is the result meaningful? What dtype would prevent that calculation from working?
 
 ## Missing Data (08.2)
-3. The notebook checks whether passengers with missing ages had a different survival rate than those with recorded ages (they did not). What would it mean for the analysis if the survival rates *were* very different? Why would dropping the missing-age rows be more dangerous in that case?
+3. The notebook checks whether passengers with missing ages had a different survival rate than those with recorded ages. They did: about 41% for recorded ages versus about 29% for missing ages. What does that difference suggest about *why* the ages are missing? Why does it make dropping the missing-age rows more dangerous than it first appears, and what would the notebook's survival analysis look like if you dropped them?
 4. `ffill()` and `interpolate()` both fill missing values, but they make different assumptions about the data. Give a concrete example of a dataset where `ffill()` would be the right choice and one where `interpolate()` would be better. What property of the data determines which is appropriate?
 5. The notebook fills missing age values with the overall median (28.0). A more sophisticated approach would compute the median separately for each combination of class and sex. What advantage does the group-specific median have? Why might it matter for downstream analysis?
 
