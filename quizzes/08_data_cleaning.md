@@ -154,17 +154,23 @@
 
 ## 08_5 · Splitting & Extracting
 
-### What does `df["name"].str.split(". ", expand=True)` return?
+### What does `df["name"].str.split(". ", expand=True, regex=False)` return?
 - [x] A DataFrame with separate columns for each piece, split at the period-space delimiter
 - [ ] A single string with the delimiter character removed
 - [ ] A Series of lists that cannot be indexed further
 - [ ] The original column unchanged
 
-### Why pass `n=1` to `str.split(". ", expand=True, n=1)`?
+### Why pass `n=1` to `str.split(". ", expand=True, n=1, regex=False)`?
 - [x] It limits the split to the first occurrence, so other periods (e.g. middle initials) don't break the string into extra pieces
 - [ ] It returns only the first row of the result
 - [ ] It splits the string into exactly one piece total
 - [ ] It removes the first character from every string
+
+### Why does 08.5 pass `regex=False` to `str.split(". ", n=1)`?
+- [x] A delimiter longer than one character is treated as a regular expression, where `.` matches any character; `regex=False` makes it a literal period-space
+- [ ] Without it, `str.split()` raises an error on any string that contains a period
+- [ ] It makes the split ignore capitalization
+- [ ] It is required whenever `expand=True` is used
 
 ### After `str.split()` without `expand=True` you have a Series of lists. How do you pick the first element of each?
 - [x] `.str.get(0)`
@@ -291,6 +297,12 @@
 - [ ] Vehicle fields are numeric and geographic fields are string typed
 - [ ] It is an arbitrary choice with no analytical reasoning behind it
 - [ ] Dropping is always preferred over leaving `NaN` values
+
+### The cleaned 311 data has the same shape and null counts either way, yet `days_parked` holds values like -762 and 7,738,669,204. What does this show about validation?
+- [x] Counting rows and nulls cannot detect impossible values; you also need range and type checks on the values that remain
+- [ ] The null count was computed incorrectly
+- [ ] Negative values are always caused by a failed date parse
+- [ ] Shape checks catch every problem as long as they run after the cleaning
 
 ### What is the suggested final check that a dataset is truly clean?
 - [x] Run the analysis you actually wanted to do (e.g. a groupby) and confirm it executes correctly on the cleaned data

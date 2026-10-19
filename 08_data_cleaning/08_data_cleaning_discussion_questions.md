@@ -18,8 +18,8 @@
 9. `.str.replace(old, new, regex=False)` is described as safer when the replacement string contains characters like `.` or `*`. Why are those characters dangerous without `regex=False`? What would happen if you called `str.replace("1st.", "first", regex=True)` on a column?
 
 ## Splitting and Extracting (08.5)
-10. `str.split(". ", n=1)` and `str.extract(r'(\w+)\.')` both extract the title from a Titanic name. The results are identical, but the two approaches make different assumptions about the data's structure. What does each approach assume? For which edge cases would `str.split` fail but `str.extract` succeed, or vice versa?
-11. After extracting the title from passenger names, the notebook finds a title `"th"` appearing once. What name in the dataset might have produced that result, and why? Does this suggest a problem with the extraction pattern, the data, or both?
+10. `str.split(". ", n=1, regex=False)` and `str.extract(r'(\w+)\.')` both extract the title from a Titanic name. The results agree for every passenger but one, and the two approaches make different assumptions about the data's structure. What does each approach assume? For which edge cases would `str.split` fail but `str.extract` succeed, or vice versa?
+11. With `regex=False`, the split gives one passenger the title `"the Countess"`. Without `regex=False`, the same split gives her the title `"th"`. Trace where `"th"` comes from. Why does the regex version still give the right title for `"Mr. Owen Harris Braund"`? Does this suggest a problem with the extraction pattern, the data, or both?
 
 ## Regular Expressions (08.6)
 12. The phone-number cleaning pattern `[^\d]` removes every non-digit character. After cleaning, the notebook validates entries with `^\d{10}$`. Why are the anchors `^` and `$` necessary in the validation step? What false result would you get if you used `\d{10}` without the anchors?
@@ -31,4 +31,4 @@
 
 ## Complete Cleaning Pipeline (08.8)
 16. The `clean_311()` function drops `current_activity` and `recent_action` because they appear to be mostly null. What risk does this create? How would you make the function safer against the case where a future version of the dataset has real values in those columns?
-17. The pipeline validates by comparing "before" and "after" shapes and null counts. What kinds of errors would this validation NOT catch? Give two specific examples of problems that would pass this check but still leave the data incorrect.
+17. The pipeline validates in two ways: comparing "before" and "after" shapes and null counts, then checking the ranges of `days_parked` and `zip_code`. The first check missed problems the second caught. What kinds of errors would *both* checks still miss? Give two specific examples of problems that would pass them but still leave the data incorrect.
