@@ -14,8 +14,8 @@
 7. `pd.to_numeric(series, errors="coerce")` converts unparseable values to `NaN`. An alternative would be `errors="raise"`. When would you prefer `"coerce"`, and when would you prefer `"raise"`? What are the risks of each?
 
 ## String Cleaning (08.4)
-8. The notebook applies `.str.strip().str.lower()` to normalize a sex column. Does the order of these two operations matter? Construct a specific example where reversing the order produces a different result.
-9. `.str.replace(old, new, regex=False)` is described as safer when the replacement string contains characters like `.` or `*`. Why are those characters dangerous without `regex=False`? What would happen if you called `str.replace("1st.", "first", regex=True)` on a column?
+8. The notebook applies `.str.strip().str.lower()` to normalize a sex column. Does the order of these two operations matter here? Explain why or why not. Then look at the class-label example, which calls `.str.lower()` before `.str.replace("first ", "1st ", regex=False)`. What would happen to `"First class"` if the replace ran first, and what general rule about ordering cleaning steps does that suggest?
+9. `.str.replace(old, new, regex=False)` is described as safer when the text you are searching for contains characters like `.` or `*`. Why are those characters dangerous without `regex=False`? What would happen if you called `str.replace("1st.", "first", regex=True)` on a column?
 
 ## Splitting and Extracting (08.5)
 10. `str.split(". ", n=1, regex=False)` and `str.extract(r'(\w+)\.')` both extract the title from a Titanic name. The results agree for every passenger but one, and the two approaches make different assumptions about the data's structure. What does each approach assume? For which edge cases would `str.split` fail but `str.extract` succeed, or vice versa?
@@ -26,9 +26,9 @@
 13. The currency-cleaning pattern is `[^\d.]`, which keeps digits and periods. What would go wrong if a value had two decimal points, like `"$71..28"` or `"£7.2.5"`? How would you detect this problem after cleaning?
 
 ## Dates and Times (08.7)
-14. The notebook shows that ISO 8601 format (`YYYY-MM-DD`) sorts correctly as a string by coincidence, while US format (`MM/DD/YYYY`) does not. Construct a specific counterexample: two US-format dates where alphabetical order gives the wrong chronological order.
+14. The notebook shows that ISO 8601 format (`YYYY-MM-DD`) sorts correctly as a string, while US format (`MM/DD/YYYY`) does not. What property of the ISO format makes string sorting give chronological order? Would `DD/MM/YYYY` sort correctly as a string? Would `YYYY/MM/DD`? What about `YYYY-M-D`, where months and days are not padded with zeros?
 15. After subtracting two `datetime64` columns, you have a `timedelta64` column. What is the difference between `.dt.seconds` and `.dt.total_seconds()`? When would they give different results?
 
 ## Complete Cleaning Pipeline (08.8)
-16. The `clean_311()` function drops `current_activity` and `recent_action` because they appear to be mostly null. What risk does this create? How would you make the function safer against the case where a future version of the dataset has real values in those columns?
+16. The `clean_311()` function drops `current_activity` and `recent_action` even though they are about 97% filled, because the resolution-time analysis does not use them. Is it a good idea to put an analysis-specific decision like this inside a reusable cleaning function? What could go wrong if someone later uses `clean_311()` to answer a different question, and how could the function make that decision easier to change?
 17. The pipeline validates in two ways: comparing "before" and "after" shapes and null counts, then checking the ranges of `days_parked` and `zip_code`. The first check missed problems the second caught. What kinds of errors would *both* checks still miss? Give two specific examples of problems that would pass them but still leave the data incorrect.
