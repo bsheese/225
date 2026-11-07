@@ -1,7 +1,7 @@
 # 10 · pandas and SQL: Module Outline
 
 ## Audience
-Undergrad CS and data science majors with Python, pandas, and groupby experience (modules 06–09); no prior SQL or relational database exposure.
+Undergrad CS and data science majors with Python, pandas, and groupby experience (modules 06–09); no prior SQL or relational database exposure. They have used `df.query()` briefly (06.3) and seen `merge()` only in a module 09 exercise solution, so 10.5 teaches it.
 
 ## Dataset
 
@@ -21,12 +21,12 @@ The split into `countries` (142 × 2) and `measurements` (1704 × 5) is artifici
 | 10.2 | SQLite Setup | `sqlite3.connect(":memory:")`, `to_sql()`, `pd.read_sql()`, `SELECT`, `LIMIT`, `ORDER BY`, `DISTINCT`, `AS` |
 | 10.3 | `WHERE` | `=`, `AND`/`OR`/`NOT`, `IN`, `BETWEEN`, `LIKE` |
 | 10.4 | `GROUP BY` and `HAVING` | `COUNT(*)`, `AVG`, `SUM`, `MIN`, `MAX`, `COUNT(DISTINCT)`, `GROUP BY`, `HAVING` |
-| 10.5 | `JOIN` | `INNER JOIN`, `LEFT JOIN`, `ON`, table aliases, NULL detection |
+| 10.5 | `JOIN` | `merge()`, `INNER JOIN`, `LEFT JOIN`, `ON`, table aliases, `IS NULL`, how a join multiplies rows, how SQL and pandas differ on missing values |
 | 10.6 | SQL vs pandas | Subqueries, `WHERE col > (SELECT ...)`, when to use each tool, two-step workflow |
 | 10.9 | Exercises | All module 10 tools |
 
 ## Growing Translation Table
-The SQL-pandas translation table accumulates across notebooks: 7 rows in 10.2, 13 rows in 10.3, 21 rows in 10.4, 23 rows in 10.5, 24 rows in 10.6. Each table is a strict superset of the previous one, so students see the same reference artifact grow with each new concept added to the vocabulary.
+The SQL-pandas translation table accumulates across notebooks: 7 rows in 10.2, 13 rows in 10.3, 21 rows in 10.4, 24 rows in 10.5, 25 rows in 10.6. Each table is a strict superset of the previous one, so students see the same reference artifact grow with each new concept added to the vocabulary.
 
 ## What Is Intentionally Excluded
 - Window functions (`OVER`, `PARTITION BY`): the SQL equivalent of `transform()`; too advanced for this module

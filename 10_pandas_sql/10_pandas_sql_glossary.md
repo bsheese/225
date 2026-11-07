@@ -6,15 +6,17 @@
 
 **`BETWEEN`**: A SQL range condition: `WHERE year BETWEEN 1990 AND 2007` keeps rows where the value falls in the closed interval [1990, 2007]. Equivalent to `WHERE year >= 1990 AND year <= 2007`.
 
-**`COUNT(DISTINCT col)`**: Counts how many unique values appear in a column within each group. Distinct from `COUNT(*)`, which counts every row including duplicates. The SQL equivalent of pandas `.nunique()`.
+**`COUNT(DISTINCT col)`**: Counts how many unique values appear in a column within each group. Different from `COUNT(*)`, which counts every row including duplicates. The SQL equivalent of pandas `.nunique()`.
 
 **database**: A structured system for storing and querying data. SQL is the standard language that almost every relational database understands. SQLite is a lightweight database that runs inside a Python process with no server required.
 
-**`df.query()`**: A pandas method that filters rows using a readable string expression. Column names are used directly; `and`/`or`/`not` replace `&`/`|`/`~`; Python variables are referenced with `@varname`.
+**`df.query()`**: A pandas method that filters rows using a readable string expression. Column names are used directly; `and`/`or`/`not` can replace `&`/`|`/`~`; Python variables are referenced with `@varname`.
 
-**`GROUP BY`**: A SQL clause that divides rows into groups by the values of one or more columns, then applies aggregate functions within each group. The SQL equivalent of `groupby().agg()`. Every non-aggregated column in `SELECT` must appear in `GROUP BY`.
+**`GROUP BY`**: A SQL clause that divides rows into groups by the values of one or more columns, then applies aggregate functions within each group. The SQL equivalent of `groupby().agg()`. In standard SQL, every non-aggregated column in `SELECT` must appear in `GROUP BY`; many databases enforce this, but SQLite does not, and it returns a value from an arbitrary row instead.
 
-**`HAVING`**: A SQL clause that filters groups after aggregation. It appears after `GROUP BY` and can reference aggregate functions. `WHERE` filters rows before grouping; `HAVING` filters groups after aggregation is complete. The SQL equivalent of `groupby().filter()`.
+**`HAVING`**: A SQL clause that filters groups after aggregation. It appears after `GROUP BY` and can reference aggregate functions. `WHERE` filters rows before grouping; `HAVING` filters groups after aggregation is complete. It makes the same kind of group-level decision as `groupby().filter()`, but it returns one summary row per group rather than the original rows; the closest pandas version is `groupby().agg()` followed by a boolean filter on the result.
+
+**`DISTINCT`**: A SQL keyword used after `SELECT` that returns each different value, or each different combination of the listed columns, once. The SQL equivalent of `.unique()` or `.drop_duplicates()`.
 
 **`IN`**: A SQL operator that tests whether a value matches any member of a list: `WHERE country IN ('Japan', 'China')`. Negated with `NOT IN`. The SQL equivalent of `.isin([...])`.
 
@@ -22,15 +24,21 @@
 
 **`LEFT JOIN`**: A join that keeps every row from the left table even when there is no matching row in the right table. Unmatched columns from the right table become `NULL`. Used to detect missing matches by filtering `WHERE right_table.col IS NULL`.
 
-**`LIKE`**: A SQL string pattern-matching operator. `%` matches any sequence of characters; `_` matches exactly one character. Less powerful than regex; use pandas `.str.contains()` for complex patterns.
+**`LIMIT`**: A SQL clause that returns at most the given number of rows. Without `ORDER BY`, the database does not promise which rows those are.
 
-**`NULL`**: SQL's missing-value sentinel, equivalent to pandas `NaN`. Aggregate functions ignore `NULL`. A `NULL` value cannot be tested with `=`; use `IS NULL` or `IS NOT NULL`.
+**`LIKE`**: A SQL string pattern-matching operator. `%` matches any sequence of characters; `_` matches exactly one character. Case-insensitive in SQLite for ASCII letters, but case-sensitive in some other databases. Less powerful than regex; use pandas `.str.contains()` for complex patterns.
+
+**`NULL`**: SQL's marker for a missing value, similar to pandas `NaN`, although the two tools do not always treat missing values the same way (see 10.5). Aggregate functions applied to a column ignore `NULL`, while `COUNT(*)` counts every row. A comparison with `NULL` is never true, so test for it with `IS NULL` or `IS NOT NULL`, not `=`.
 
 **`ON`**: The clause that specifies the join condition between two tables: `JOIN countries AS c ON m.country = c.country`. It names the column in each table that holds the shared key.
+
+**`ORDER BY`**: A SQL clause that sorts the result by one or more columns, ascending by default or descending with `DESC`. The SQL equivalent of `sort_values()`.
 
 **`pd.read_sql(query, conn)`**: The pandas function that sends a SQL string to a database connection and returns the result as a DataFrame.
 
 **relational table**: A rectangular data structure in a database with named, typed columns, analogous to a pandas DataFrame. Related tables share a key column that allows them to be joined.
+
+**`SELECT`**: The SQL keyword that starts a query and lists the columns to return. `SELECT *` returns every column.
 
 **subquery**: A `SELECT` statement nested inside another SQL statement. Used in `WHERE` to compare against a computed value (`WHERE lifeExp > (SELECT AVG(lifeExp) FROM ...)`), or in `IN` to filter based on a list produced by another query.
 
