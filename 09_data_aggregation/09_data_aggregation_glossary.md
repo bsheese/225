@@ -8,7 +8,7 @@
 
 **long format**: A table layout where each row is one observation and grouping variables are regular columns. The output of `reset_index()` on a MultiIndex result. Most seaborn charts expect long format.
 
-**margins**: Row and column totals added to a pivot table with `margins=True`. Each margin cell uses the same aggregation function as the rest of the table.
+**margins**: A summary row and column added to a pivot table with `margins=True`. Each margin cell uses the same aggregation function as the rest of the table and is computed from the underlying rows, not from the table's cells, so with `aggfunc="mean"` the margins are means rather than totals.
 
 **MultiIndex**: A hierarchical pandas index where each row is identified by a combination of values from two or more levels. Produced by `groupby([col1, col2])`. Flattened to a regular index with `reset_index()`.
 
@@ -16,7 +16,7 @@
 
 **panel data**: A dataset where the same units are observed at multiple time points. Each row is identified by a `(unit, time)` pair. Gapminder is panel data: 142 countries × 12 years = 1,704 rows.
 
-**pivot table**: A two-dimensional aggregation where one variable goes on the rows, another on the columns, and a summary statistic fills each cell. Produced by `pd.pivot_table()` or by `groupby().mean().unstack()`.
+**pivot table**: A two-dimensional aggregation where one variable goes on the rows, another on the columns, and a summary statistic fills each cell. Produced by `pd.pivot_table()` or by `groupby([col1, col2])[value_col].mean().unstack()`.
 
 **`transform()`**: A groupby method that computes a group statistic and returns a Series aligned to the original DataFrame's index, with one value per original row. Used to add group-level information back to every row without a separate merge.
 

@@ -98,7 +98,7 @@
 
 ### What is the difference between `size()` and `count()` on a groupby?
 - [x] `size()` counts every row in the group including nulls; `count()` counts only non-null values in a column
-- [ ] They are identical for any dataset without missing values
+- [ ] `size()` gives the number of groups; `count()` gives the number of rows in the whole DataFrame
 - [ ] `size()` counts columns; `count()` counts rows
 - [ ] `count()` includes nulls; `size()` excludes them
 
@@ -204,7 +204,7 @@
 - [ ] `rows=`, `cols=`, `sum=`, and `mean=`
 - [ ] `on=`, `how=`, `left=`, and `right=`
 
-### How does `pivot_table` relate to the `groupby(...).mean().unstack()` pattern from 09.2?
+### How does `pivot_table` relate to the `groupby(...)[col].mean().unstack()` pattern from 09.2?
 - [x] It produces the same wide table in a single call with explicit `index`/`columns`/`values` arguments, no MultiIndex/unstack step needed
 - [ ] It produces a completely different result than groupby/unstack
 - [ ] It only works on a single grouping dimension
@@ -217,7 +217,7 @@
 - [ ] Raises an error unless `index` is also set to `year`
 
 ### What does `margins=True` add to a pivot table?
-- [x] A grand-total row and column (labeled `All` by default) computed with the same aggregation function
+- [x] A summary row and column (labeled `All` by default) computed with the same aggregation function
 - [ ] Extra whitespace margin around the displayed table
 - [ ] A confidence interval for each individual cell
 - [ ] The standard deviation of values in each row

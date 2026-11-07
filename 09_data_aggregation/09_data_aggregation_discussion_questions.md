@@ -1,11 +1,11 @@
 # 09 · Data Aggregation: Discussion Questions
 
 ## Meet Gapminder (09.1)
-1. The global mean life expectancy across all 1,704 rows is about 59.5 years, but the mean for individual countries in 2007 alone is about 67 years. Why are these two numbers different? What does the gap reveal about the data's structure, and why would averaging all rows without grouping by year produce a number that does not accurately describe any real point in time?
+1. The global mean life expectancy across all 1,704 rows is about 59.5 years, but the mean across countries in 2007 alone is about 67 years. Why are these two numbers different? What does the gap reveal about the data's structure, and why is a mean over all 12 years hard to interpret as a description of the world at any one time, even though it happens to land close to the 1977 mean of 59.6?
 2. The Gapminder dataset has 142 countries and 12 time points, giving exactly 1,704 rows. A student wants to find all countries that appear more or fewer than 12 times, suspecting data entry errors. Write out the pandas steps you would take (in plain English or pseudocode). What would it mean if a country appeared only 6 times?
 
 ## Multiple Groupby Keys (09.2)
-3. `groupby(["continent", "year"])["lifeExp"].mean()` produces a MultiIndex Series. After calling `reset_index()`, you have a flat DataFrame with three columns: `continent`, `year`, and `lifeExp`. If you then called `groupby("continent")["lifeExp"].mean()` on that flat DataFrame, what would you get, and how does it differ from calling `groupby("continent")["lifeExp"].mean()` on the original full dataset?
+3. `groupby(["continent", "year"])["lifeExp"].mean()` produces a MultiIndex Series. After calling `reset_index()`, you have a flat DataFrame with three columns: `continent`, `year`, and `lifeExp`. If you then called `groupby("continent")["lifeExp"].mean()` on that flat DataFrame, you would get the same values as calling it on the original full dataset. Why does averaging the yearly means give the same answer here, and what would have to be different about the data for the two results to differ?
 4. `unstack("year")` puts years on the columns; `unstack("continent")` puts continents on the columns. For the specific question "which year saw the largest jump in Africa's life expectancy between consecutive observations?", which orientation is easier to work with? Why?
 
 ## `agg()` (09.3)

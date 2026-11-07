@@ -1,7 +1,7 @@
 # 09 · Data Aggregation: Module Outline
 
 ## Audience
-Undergrad CS and data science majors with Python and pandas experience (modules 06–08); familiar with single-key `groupby().mean()` from module 06 but no prior exposure to multi-key groupby, `agg()`, `transform()`, `filter()`, or `pivot_table()`.
+Undergrad CS and data science majors with Python and pandas experience (modules 06–08); familiar from module 06 with `groupby()`, `agg()` including named aggregation, two-key groupby, `pivot_table()`, `margins=True` and `unstack()` on the Titanic data, and revisits them here in more depth. The MultiIndex by name, `size()` vs `count()`, `idxmax()`, group-level `transform()` (mentioned only in passing in 08.2) and `groupby().filter()` are new.
 
 ## Dataset
 
@@ -24,7 +24,7 @@ Every notebook is self-contained: each loads Gapminder from the source URL in it
 | 09.9 | Exercises | All module 09 tools on Gapminder |
 
 ## What Is Intentionally Excluded
-- `apply()` with custom functions: increasingly deprecated in favor of `agg()`
+- `apply()` with custom functions: left out for scope; `agg()`, `transform()` and `filter()` cover the module's questions
 - `resample()`: time-series specific; covered in module 11
 - `pd.Grouper`: too advanced
 - Cumulative operations: `cumsum()`, `cummax()`, `cummin()`
